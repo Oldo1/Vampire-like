@@ -20,7 +20,6 @@ namespace Assets.Scripts.Entities.Projectiles
         private EnemyDetection _enemyDetection;
         private StoneObjectPool _objectPool;
         private float _damage;
-        private float _speed;
 
         [Inject]
         private void Construct(EnemyDetection enemyDetection, StoneObjectPool objectPool)
@@ -28,7 +27,6 @@ namespace Assets.Scripts.Entities.Projectiles
             _enemyDetection = enemyDetection;
             _objectPool = objectPool;
         }
-
 
         public override void Launch(Transform target, float damage, float speed)
         {
@@ -41,7 +39,6 @@ namespace Assets.Scripts.Entities.Projectiles
 
             _target = target;
             _damage = damage;
-            _speed = speed;
             StartCoroutine(ProjectileMovement());
         }
 
@@ -77,24 +74,22 @@ namespace Assets.Scripts.Entities.Projectiles
                 for(var i = 0; i < foundEnemiesCount; i++)
                 {
                     var enemy = enemies[i];
-                    if (enemy.TryGetComponent<IDamageable>(out var damageable))
-                    {
+                    if (enemy != null && enemy.TryGetComponent<IDamageable>(out var damageable))
                         damageable.TakeDamage(_splashDamage);
-                        Debug.Log("splash damage dealed");
-                    }
                 }
             }
         }
 
         private void OnTriggerEnter(Collider collider)
         {
-            if (collider.TryGetComponent<Enemy>(out var enemy))
-            {
-                enemy.TakeDamage(_damage);
-                DealSplashDamage();
-                if (isActiveAndEnabled)
-                    _objectPool.Release(this);
-            }
+            if (!collider.TryGetComponent<Enemy>(out var enemy) || !enemy.isActiveAndEnabled)
+                return;
+
+            enemy.TakeDamage(_damage);
+            DealSplashDamage();
+
+            if (isActiveAndEnabled)
+                _objectPool.Release(this);
         }
 
         public class Factory : PlaceholderFactory<Stone>

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Entities.Projectiles;
-using Assets.Scripts.ObjectPool;
+﻿using Assets.Scripts.ObjectPool;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +10,9 @@ namespace Assets.Scripts
 
         public ProjectileDestroyer(float lifeTime)
         {
+            if (lifeTime < 0)
+                throw new System.ArgumentOutOfRangeException();
+
             _lifeTime = lifeTime;
         }
 

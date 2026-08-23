@@ -43,6 +43,7 @@ namespace Assets.Scripts.Entities.Projectiles
 
             if (target.TryGetComponent<IDamageable>(out var damageable))
                 Attack(damageable);
+
             StartCoroutine(ReleaseWhenEffectFinished());
         }
 

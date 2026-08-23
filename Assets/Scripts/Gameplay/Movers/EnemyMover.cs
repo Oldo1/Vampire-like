@@ -7,8 +7,6 @@ namespace Assets.Scripts
 {
     public class EnemyMover : ITickable
     {
-        public const string RotationSpeedId = "EnemyRotationSpeed";
-
         public bool Enabled { get; set; }
 
         private readonly Transform _playerTransform;
@@ -16,8 +14,8 @@ namespace Assets.Scripts
         private readonly MovementRotator _movementRotator;
         private readonly float _rotationSpeed;
 
-        public EnemyMover(Transform transform, EnemyObjectPool enemyObjectPool, MovementRotator movementRotator,
-            [Inject(Id = RotationSpeedId)] float rotationSpeed)
+        public EnemyMover(Transform transform, EnemyObjectPool enemyObjectPool, 
+            MovementRotator movementRotator,float rotationSpeed)
         {
             if (transform == null)
                 throw new NullReferenceException("transform is null");
@@ -42,7 +40,7 @@ namespace Assets.Scripts
             {
                 var enemyPosition = enemy.transform.position;
                 var direction = (playerPosition - enemyPosition).normalized;
-                _movementRotator.RotateTowardsMovement(enemy.Model, direction, _rotationSpeed);
+                _movementRotator.RotateTowardsDirection(enemy.Model, direction, _rotationSpeed);
                 enemy.Move(direction);
             }
         }

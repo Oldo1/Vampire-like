@@ -8,6 +8,6 @@ namespace Assets.Scripts.Items.Weapons
         {
         }
 
-        public abstract void StartShooting();
+        public abstract void Fire();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Interfaces;
 using Assets.Scripts.ObjectPool;
 using UnityEngine;
-using UnityEngine.VFX;
 using Zenject;
 
 namespace Assets.Scripts.Entities.Projectiles

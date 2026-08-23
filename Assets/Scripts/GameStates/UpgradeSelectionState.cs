@@ -1,20 +1,23 @@
-using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.GameStates
 {
     public class UpgradeSelectionState : IGameState
     {
+        public const string PanelId = "UpgradeSelectionPanel";
+
         private readonly Player _player;
         private readonly UpgradeMenu _upgradeMenu;
-        private readonly GameObject _panel;
+        private readonly PanelUI _panel;
         private readonly Joystick _joystick;
         private readonly CrystalsMover _crystalsMover;
         private readonly EnemySpawner _enemySpawner;
         private readonly ProjectilesMover _projectilesMover;
         private readonly EnemyMover _enemyMover;
 
-        public UpgradeSelectionState(Player player, UpgradeMenu upgradeMenu, GameObject panel, Joystick joystick,
+        public UpgradeSelectionState(Player player, UpgradeMenu upgradeMenu, [Inject(Id = PanelId)] PanelUI panel,
+            Joystick joystick,
             CrystalsMover crystalsMover, EnemySpawner enemySpawner, ProjectilesMover projectilesMover, EnemyMover enemyMover)
         {
             _player = player;
@@ -32,7 +35,7 @@ namespace Assets.Scripts.GameStates
             _player.EnableInput(false);
             _player.EnableCrystallCollector(false);
             _upgradeMenu.gameObject.SetActive(true);
-            _panel.SetActive(true);
+            _panel.gameObject.SetActive(true);
             _joystick.enabled = false;
             _crystalsMover.Enabled = false;
             _enemySpawner.Enabled = false;
@@ -46,7 +49,7 @@ namespace Assets.Scripts.GameStates
             _player.EnableInput(true);
             _player.EnableCrystallCollector(true);
             _upgradeMenu.gameObject.SetActive(false);
-            _panel.SetActive(false);
+            _panel.gameObject.SetActive(false);
             _joystick.enabled = true;
             _crystalsMover.Enabled = true;
             _enemySpawner.Enabled = true;

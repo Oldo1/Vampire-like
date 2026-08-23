@@ -15,5 +15,30 @@ namespace Assets.Scripts.Extensions
             }
             return false;
         }
+
+        public static int GetRandomUniqueItems<T>(this IEnumerable<T> collection, T[] result)
+        {
+            var selectedItemsCount = 0;
+            var processedItemsCount = 0;
+
+            foreach (var item in collection)
+            {
+                processedItemsCount++;
+
+                if (selectedItemsCount < result.Length)
+                {
+                    result[selectedItemsCount] = item;
+                    selectedItemsCount++;
+                    continue;
+                }
+
+                var randomIndex = UnityEngine.Random.Range(0, processedItemsCount);
+
+                if (randomIndex < result.Length)
+                    result[randomIndex] = item;
+            }
+
+            return selectedItemsCount;
+        }
     }
 }

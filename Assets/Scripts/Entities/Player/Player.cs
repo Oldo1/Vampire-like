@@ -2,7 +2,6 @@
 using System;
 using Zenject;
 using Assets.Scripts.PlayerScripts;
-using Assets.Scripts.Gameplay;
 using Assets.Scripts.Configs.Items;
 
 namespace Assets.Scripts
@@ -10,13 +9,12 @@ namespace Assets.Scripts
     public class Player : MonoBehaviour, IInitializable
     {
         private PlayerInput _playerInput;
-        private Health _health;
         private Level _level;
         private CrystalCollector _crystallCollector;
         private ItemInfo _startWeaponInfo;
-        private Inventory _inventory;
-        private UpgradeCardsContainer _upgradeCardContainer;
         private Animator _animator;
+
+        public int StartWeaponId => _startWeaponInfo.Id;
 
         public event Action<float> OnIncreaseLevelProgress
         {
@@ -32,22 +30,19 @@ namespace Assets.Scripts
 
         [Inject]
         private void Construct(Level levelController, CrystalCollector crystalCollector, PlayerInput playerInput,
-            ItemInfo startWeaponInfo, Inventory inventory, UpgradeCardsContainer upgradeCardContainer)
+            ItemInfo startWeaponInfo, Animator animator)
         {
             _level = levelController;
             _crystallCollector = crystalCollector;
             _playerInput = playerInput;
             _startWeaponInfo = startWeaponInfo;
-            _inventory = inventory;
-            _upgradeCardContainer = upgradeCardContainer;
+            _animator = animator;
         }
 
         public void Initialize()
         {
             _crystallCollector.OnCollect += OnCollect;
-            var startItem = _upgradeCardContainer.GetUpgradeCard(_startWeaponInfo.Id).Item;
             transform.position = new Vector3(0, 0.5f, 0);
-            _inventory.AddItem(startItem);
             _animator = GetComponentInChildren<Animator>();
         }
 

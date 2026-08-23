@@ -1,21 +1,23 @@
 using System.Collections.Generic;
-using System.Linq;
 using Zenject;
 using UnityEngine;
-using Assets.Scripts.Extensions;
 using System;
-using Assets.Scripts.Items;
 using Assets.Scripts.Gameplay;
+using Assets.Scripts.Extensions;
 
 public class UpgradeMenu : MonoBehaviour, IInitializable
 {
+    private const int MaxVisibleCards = 3;
+
     public event Action<UpgradeCard> OnCardSelect;
 
-    public IEnumerable<Item> AvailableItems => _availableCards.Values.Select(x => x.Item);
+    public IEnumerable<UpgradeCard> AvailableCards => _availableCards.AvailableCards;
+    public bool HasAvailableItems => _availableCards.HasCards;
 
     private UpgradeCardsContainer _availableCards;
-    public bool HasAvailableItems => _availableCards.HasCards;
-    
+    private readonly UpgradeCard[] _cardsToShow = new UpgradeCard[MaxVisibleCards];
+
+
 
     [Inject]
     private void Construct(UpgradeCardsContainer availableCards)
@@ -31,13 +33,13 @@ public class UpgradeMenu : MonoBehaviour, IInitializable
 
     public void OnSelectCardSubscribe()
     {
-        foreach (var card in _availableCards.Values)
+        foreach (var card in _availableCards.AllCards)
             card.OnCardSelect += OnCardSelectMethod;
     }
 
     private void OnSelectCardUnsubscribe()
     {
-        foreach (var card in _availableCards.Values)
+        foreach (var card in _availableCards.AllCards)
             card.OnCardSelect -= OnCardSelectMethod;
     }
 
@@ -56,23 +58,24 @@ public class UpgradeMenu : MonoBehaviour, IInitializable
             return;
         }
         
-        var availableCardsList = _availableCards.Values.ToList();
+        var selectedCardsCount = _availableCards.AvailableCards.GetRandomUniqueItems(_cardsToShow);
 
-        availableCardsList.Shuffle();
-
-        for (var i = 0; i < Mathf.Min(3, _availableCards.Count); i++)
-            availableCardsList[i].gameObject.SetActive(true);
+        for (var i = 0; i < selectedCardsCount; i++)
+            _cardsToShow[i].gameObject.SetActive(true);
     }
 
     public bool RemoveCard(int id)
     {
-        _availableCards.GetUpgradeCard(id).gameObject.SetActive(false);
+        if (!_availableCards.TryGetUpgradeCard(id, out var card))
+            return false;
+
+        card.gameObject.SetActive(false);
         return _availableCards.Remove(id);
     }
 
     private void HideAllCards()
     {
-        foreach (var card in _availableCards.Values)
+        foreach (var card in _availableCards.AllCards)
             card.gameObject.SetActive(false);
     }
 

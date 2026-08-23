@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Assets.Scripts
@@ -11,17 +10,21 @@ namespace Assets.Scripts
         private Camera _camera;
 
         [Inject]
-        private void Construct(Camera camera, GameObject healthBar)
+        private void Construct(GameObject healthBar)
         {
-            _camera = camera;
             _healthBar = healthBar;
         }
 
         private void LateUpdate()
         {
+            if (_camera == null)
+                _camera = Camera.main;
+
+            if (_camera == null)
+                return;
+
             var cameraForward = _camera.transform.forward;
             _healthBar.transform.LookAt(cameraForward + transform.position);
         }
-
     }
 }

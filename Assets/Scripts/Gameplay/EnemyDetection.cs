@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Configs;
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts
 {

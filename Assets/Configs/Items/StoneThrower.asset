@@ -19,5 +19,6 @@ MonoBehaviour:
   <MaxLevel>k__BackingField: 6
   <Damage>k__BackingField: 1
   <Speed>k__BackingField: 5
+  <ProjectileAmount>k__BackingField: 1
   <Radius>k__BackingField: 10
   <Cooldown>k__BackingField: 1

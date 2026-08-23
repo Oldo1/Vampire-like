@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Configs.Items;
 using System;
-using System.Transactions;
 using UnityEngine;
 
 namespace Assets.Scripts.Items

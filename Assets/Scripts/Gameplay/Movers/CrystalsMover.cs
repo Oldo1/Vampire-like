@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.PlayerScripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -10,17 +9,20 @@ namespace Assets.Scripts
     {
         public bool Enabled { get; set; }
 
+        private readonly float _detectionRadius;
+        private readonly LayerMask _crystalsLayerMask;
         private readonly Transform _playerTransform;
-        private readonly CrystalsDetection _crystalsDetection;
+        private readonly HashSet<Crystal> _movingCrystals;
+        private readonly Collider[] _crystalsCollidersBuffer;
 
-        private HashSet<Crystal> _movingCrystals;
-
-        public CrystalsMover(Transform transform, CrystalsDetection crystalsDetection)
+        public CrystalsMover(Transform transform, float detectionRadius, LayerMask layerMask, int bufferLength)
         {
             _playerTransform = transform;
-            _crystalsDetection = crystalsDetection;
             _movingCrystals = new HashSet<Crystal>();
             Enabled = true;
+            _detectionRadius = detectionRadius;
+            _crystalsLayerMask = layerMask;
+            _crystalsCollidersBuffer = new Collider[bufferLength];
         }
 
         private void OnCollect(Crystal crystal)
@@ -29,12 +31,15 @@ namespace Assets.Scripts
             crystal.OnCollect -= OnCollect;
         }
 
-        private void AddNerbyCrystals()
+        private void AddMovingCrystals()
         {
-            if (_crystalsDetection.TryGetCrystalsNearbyCrystals(out var crystals))
+            var playerPosition = _playerTransform.position;
+            var overlapResult = Physics.OverlapSphereNonAlloc(playerPosition, _detectionRadius, _crystalsCollidersBuffer, (int)_crystalsLayerMask);
+            if (overlapResult != 0)
             {
-                foreach (var crystal in crystals)
+                for (var i = 0; i < overlapResult; i++)
                 {
+                    var crystal = _crystalsCollidersBuffer[i].GetComponent<Crystal>();
                     if (!_movingCrystals.Contains(crystal))
                     {
                         _movingCrystals.Add(crystal);
@@ -62,7 +67,7 @@ namespace Assets.Scripts
         public void FixedTick()
         {
             if (Enabled)
-                AddNerbyCrystals();
+                AddMovingCrystals();
         }
 
         public void Tick()

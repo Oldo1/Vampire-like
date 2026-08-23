@@ -6,14 +6,14 @@ namespace Assets.Scripts.Configs.Items.Weapons
 {
     public class DamageAuraSpawner : Weapon
     {
-        private readonly MonoBehaviour _shooter;
+        private readonly Player _shooter;
         private readonly DamageAura.Factory _damageAuraFactory;
+        private readonly float _cooldown;
 
-        private float _cooldown;
         private float _radius;
         private float _damage;
 
-        public DamageAuraSpawner(MonoBehaviour shooter, EnemyDetection enemyDetection, DamageAuraConfig config, DamageAura.Factory damageAuraFactory) : base(config)
+        public DamageAuraSpawner(Player shooter, EnemyDetection enemyDetection, DamageAuraConfig config, DamageAura.Factory damageAuraFactory) : base(config)
         {
             _shooter = shooter;
             _damage = config.Damage;
@@ -23,13 +23,13 @@ namespace Assets.Scripts.Configs.Items.Weapons
 
         }
 
-        public override void StartShooting()
+        public override void Fire()
         {
             var damageAura = _damageAuraFactory.Create();
-            damageAura.transform.position = _shooter.transform.position;
-            damageAura.transform.SetParent(_shooter.transform, false);
-            damageAura.transform.localPosition = Vector3.zero;
-            damageAura.transform.localRotation = Quaternion.identity;
+            var transform = damageAura.transform;
+            transform.position = _shooter.transform.position;
+            transform.SetParent(_shooter.transform, false);
+            transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             damageAura.StartDealDamage(_cooldown, _radius, _damage);
         }
 

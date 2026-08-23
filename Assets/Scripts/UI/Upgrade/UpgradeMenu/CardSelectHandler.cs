@@ -16,7 +16,6 @@ namespace Assets.Scripts
             if (TryGetComponent<UpgradeCard>(out var selectedCard))
             {
                 OnCardSelect?.Invoke(selectedCard);
-                Debug.Log(selectedCard.ItemInfo.Name);
             }
         }
     }

@@ -14,12 +14,11 @@ public class PlayerMover : MonoBehaviour
     private float _rotationSpeed;
 
     [Inject]
-    private void Construct(CharacterController characterController, float speed, Camera camera, PlayerInput playerInput,
+    private void Construct(CharacterController characterController, float speed, PlayerInput playerInput,
         MovementRotator movementRotator, [Inject(Id = RotationSpeedId)] float rotationSpeed)
     {
         _characterController = characterController;
         _speed = speed;
-        _camera = camera;
         _playerInput = playerInput;
         _movementRotator = movementRotator;
         _rotationSpeed = rotationSpeed;
@@ -32,12 +31,18 @@ public class PlayerMover : MonoBehaviour
         {
             var velocity = _speed * direction;
             _characterController.Move(velocity * Time.deltaTime);
-            _movementRotator.RotateTowardsMovement(transform, direction, _rotationSpeed);
+            _movementRotator.RotateTowardsDirection(transform, direction, _rotationSpeed);
         }
     }
 
     private Vector3 GetMoveDirection()
     {
+        if (_camera == null)
+            _camera = Camera.main;
+
+        if (_camera == null)
+            return Vector3.zero;
+
         var inputValue = _playerInput.GetMoveInput();
 
         var forward = _camera.transform.forward;

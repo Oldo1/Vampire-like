@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     public class MovementRotator
     {
-        public void RotateTowardsMovement(Transform target, Vector3 direction, float rotationSpeed)
+        public void RotateTowardsDirection(Transform target, Vector3 direction, float rotationSpeed)
         {
             if (direction == Vector3.zero)
                 return;

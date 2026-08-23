@@ -19,7 +19,11 @@ namespace Assets.Scripts.ObjectPool
                 createFunc: () => factory.Create(),
                 actionOnGet: obj => obj.gameObject.SetActive(true),
                 actionOnRelease: obj => obj.gameObject.SetActive(false),
-                actionOnDestroy: obj => Object.Destroy(obj.gameObject),
+                actionOnDestroy: obj =>
+                {
+                    if (obj != null)
+                        Object.Destroy(obj.gameObject);
+                },
                 collectionCheck: true,
                 maxSize: 1000
             );
@@ -41,6 +45,7 @@ namespace Assets.Scripts.ObjectPool
 
         public void Dispose()
         {
+            _activeObjects.Clear();
             _objectPool.Dispose();
         }
     }
