@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 7
   <Name>k__BackingField: Stone Thrower
-  <Description>k__BackingField: 
+  <Description>k__BackingField: Throws stones
   <Icon>k__BackingField: {fileID: 1740004545, guid: bed06d2e627739541aa05f7d3be6fbb8, type: 3}
   <MaxLevel>k__BackingField: 6
   <Damage>k__BackingField: 1

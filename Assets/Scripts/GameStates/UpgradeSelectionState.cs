@@ -13,12 +13,12 @@ namespace Assets.Scripts.GameStates
         private readonly Joystick _joystick;
         private readonly CrystalsMover _crystalsMover;
         private readonly EnemySpawner _enemySpawner;
-        private readonly ProjectilesMover _projectilesMover;
-        private readonly EnemyMover _enemyMover;
+        private readonly FireBallsMover _projectilesMover;
+        private readonly EnemiesMover _enemyMover;
 
         public UpgradeSelectionState(Player player, UpgradeMenu upgradeMenu, [Inject(Id = PanelId)] PanelUI panel,
             Joystick joystick,
-            CrystalsMover crystalsMover, EnemySpawner enemySpawner, ProjectilesMover projectilesMover, EnemyMover enemyMover)
+            CrystalsMover crystalsMover, EnemySpawner enemySpawner, FireBallsMover projectilesMover, EnemiesMover enemyMover)
         {
             _player = player;
             _upgradeMenu = upgradeMenu;

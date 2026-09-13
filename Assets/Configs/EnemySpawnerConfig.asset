@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemySpawnerConfig
   m_EditorClassIdentifier: 
   <SpawnRadius>k__BackingField: 20
-  <SpawnRate>k__BackingField: 2
+  <SpawnRate>k__BackingField: 0.2

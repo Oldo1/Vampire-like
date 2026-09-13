@@ -31,6 +31,9 @@ namespace Assets.Scripts
 
             if (other.TryGetComponent<Enemy>(out var target))
             {
+                if (!target.isActiveAndEnabled)
+                    return;
+
                 _hasHit = true;
 
                 if (_projectile is IAttacker attacker)

@@ -14,11 +14,21 @@ namespace Assets.Scripts.UI
             _timerUI.text = "00:00";
         }
 
+        private int _lastElapsedSeconds = -1;
+
         private void Update()
         {
-            var seconds = (int)(Time.timeSinceLevelLoad % 60);
-            var minutes = (int)(Time.timeSinceLevelLoad / 60);
-            _timerUI.text = $"{minutes:D2}:{seconds:D2}";
+            int elapsedSeconds = (int)Time.timeSinceLevelLoad;
+
+            if (elapsedSeconds == _lastElapsedSeconds)
+                return;
+
+            _lastElapsedSeconds = elapsedSeconds;
+
+            int minutes = elapsedSeconds / 60;
+            int seconds = elapsedSeconds % 60;
+
+            _timerUI.SetText("{0:00}:{1:00}", minutes, seconds);
         }
     }
 }

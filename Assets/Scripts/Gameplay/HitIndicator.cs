@@ -5,17 +5,26 @@ namespace Assets.Scripts.Gameplay
 {
     public class HitIndicator
     {
-        public void Flash(Material material, Color color, Color baseColor, float time, MonoBehaviour coroutineStarter)
+        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+
+        public void Flash(Renderer renderer, MaterialPropertyBlock block, Color color, float time, MonoBehaviour coroutineStarter)
         {
-            var flashRoutine = FlashRoutine(material, color, baseColor, time);
+            var flashRoutine = FlashRoutine(renderer, block, color, time);
             coroutineStarter.StartCoroutine(flashRoutine);
         }
 
-        private IEnumerator FlashRoutine(Material material, Color color, Color baseColor, float time)
+        private IEnumerator FlashRoutine(Renderer renderer, MaterialPropertyBlock block, Color color, float time)
         {
-            material.color = color;
+            SetColor(renderer, block, color);
             yield return new WaitForSeconds(time);
-            material.color = baseColor;
+            renderer.SetPropertyBlock(null);
+        }
+
+        private void SetColor(Renderer renderer, MaterialPropertyBlock block, Color color)
+        {
+            block.Clear();
+            block.SetColor(BaseColorId, color);
+            renderer.SetPropertyBlock(block);
         }
     }
 }

@@ -1,0 +1,10 @@
+# ninja log v5
+104	1961	8092873047719135	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a6adc9c76827f0be
+18	1999	8092873047921433	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	6bc3762283463a25
+38	2037	8092873048198652	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	b882987fc3f21f5a
+59	2109	8092873048695299	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	73c64ad6cb79943d
+83	2216	8092873049973583	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	11291b5380cb2900
+175	2277	8092873050832743	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	ccf33313382a1116
+129	2323	8092873051406709	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1c2bbd87cbcfef6a
+2	2381	8092873051623508	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	85acf21f31b526aa
+2382	2995	8092873057991611	C:/Users/semen/Vampire-like/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/43k2h225/obj/arm64-v8a/libgame.so	c43c377f0c59d4c9

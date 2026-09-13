@@ -2,7 +2,6 @@
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.ObjectPool;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace Assets.Scripts
 {
     public class Enemy : MonoBehaviour, IDamageable, IKillable
     {
-        private Color _baseColor;
+        public const string CrystalsParentId = "CrystalsParent";
 
         public Transform Model { get; set; }
         public Action<float> OnTakeDamage;
@@ -19,14 +18,15 @@ namespace Assets.Scripts
         private Health _health;
         private CharacterController _characterController;
         private Renderer[] _bodyPartsRenderers;
+        private MaterialPropertyBlock _block;
         private HitIndicator _hitIndicator;
+        private Transform _crystalsParent;
         private float _speed;
-
-        public IEnumerable<Renderer> BodyPartsRenderers => _bodyPartsRenderers;
 
         [Inject]
         public void Construct(CrystalObjectPool crystalPool, EnemyObjectPool enemyObjectPool, Health health, CharacterController characterController,
-            float speed, Transform model, Renderer[] bodyPartsRenderers, HitIndicator hitIndicator)
+            float speed, Transform model, Renderer[] bodyPartsRenderers, HitIndicator hitIndicator, MaterialPropertyBlock block,
+            [Inject(Id = CrystalsParentId)] Transform crystalsParent)
         {
             _crystalPool = crystalPool;
             _enemyObjectPool = enemyObjectPool;
@@ -36,7 +36,8 @@ namespace Assets.Scripts
             Model = model;
             _bodyPartsRenderers = bodyPartsRenderers;
             _hitIndicator = hitIndicator;
-            _baseColor = Color.white;
+            _block = block;
+            _crystalsParent = crystalsParent;
         }
 
         private void OnEnable()
@@ -51,6 +52,9 @@ namespace Assets.Scripts
 
         public void TakeDamage(float damage)
         {
+            if (!isActiveAndEnabled)
+                return;
+
             Flash();
             _health.TakeDamage(damage);
             OnTakeDamage?.Invoke(_health.Progress);
@@ -60,8 +64,8 @@ namespace Assets.Scripts
         {
             for(var i = 0; i < _bodyPartsRenderers.Length; i++)
             {
-                var material = _bodyPartsRenderers[i].material;
-                _hitIndicator.Flash(material, Color.red, _baseColor, 0.15f, this);
+                var renderer = _bodyPartsRenderers[i];
+                _hitIndicator.Flash(renderer, _block, Color.red, 0.15f, this);
             }
         }
 
@@ -70,17 +74,14 @@ namespace Assets.Scripts
             if (gameObject.activeSelf)
             {
                 _enemyObjectPool.Release(this);
-                _crystalPool.Get(transform.position);
+                _crystalPool.Get(transform.position, _crystalsParent);
             }
         }
 
         private void OnDisable()
         {
             for (var i = 0; i < _bodyPartsRenderers.Length; i++)
-            {
-                var render = _bodyPartsRenderers[i];
-                render.material.color = _baseColor;
-            }
+                _bodyPartsRenderers[i].SetPropertyBlock(null);
         }
 
         public class Factory : PlaceholderFactory<Enemy>

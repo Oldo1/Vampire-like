@@ -13,7 +13,7 @@ namespace Assets.Scripts.Configs.Items.Weapons
         private float _radius;
         private float _damage;
 
-        public DamageAuraSpawner(Player shooter, EnemyDetection enemyDetection, DamageAuraConfig config, DamageAura.Factory damageAuraFactory) : base(config)
+        public DamageAuraSpawner(Player shooter, DamageAuraConfig config, DamageAura.Factory damageAuraFactory) : base(config)
         {
             _shooter = shooter;
             _damage = config.Damage;

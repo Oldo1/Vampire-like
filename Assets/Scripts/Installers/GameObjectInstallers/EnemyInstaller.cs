@@ -15,6 +15,9 @@ namespace Assets.Scripts.Installers
 
         public override void InstallBindings()
         {
+            Container.Bind<MaterialPropertyBlock>()
+                .AsSingle();
+
             Container.Bind<Renderer>()
                 .FromComponentsInChildren()
                 .AsSingle();

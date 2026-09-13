@@ -1,6 +1,5 @@
 using Assets.Scripts.Configs;
 using Assets.Scripts.Gameplay;
-using Assets.Scripts.PlayerScripts;
 using UnityEngine;
 using Zenject;
 
@@ -11,12 +10,14 @@ namespace Assets.Scripts
         [SerializeField] private EnemySpawnerConfig _enemySpawnerConfig;
         [SerializeField] private DetectionConfig _crystalsDetectionConfig;
         [SerializeField] private DetectionConfig _enemyDetectionConfig;
+        [SerializeField] private Transform _enemiesParent;
+        [SerializeField] private Transform _crystalsParent;
         [SerializeField] private float _enemyRotationSpeed;
         [SerializeField] private float _projectileLifeTime;
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<EnemyMover>()
+            Container.BindInterfacesAndSelfTo<EnemiesMover>()
                 .FromSubContainerResolve()
                 .ByMethod(InstallEnemyMover)
                 .AsSingle()
@@ -28,7 +29,7 @@ namespace Assets.Scripts
                 .AsSingle()
                 .NonLazy();
 
-            Container.BindInterfacesAndSelfTo<ProjectilesMover>()
+            Container.BindInterfacesAndSelfTo<FireBallsMover>()
                 .AsSingle()
                 .NonLazy();
 
@@ -52,6 +53,10 @@ namespace Assets.Scripts
             Container.Bind<HitIndicator>()
                 .AsSingle();
 
+            Container.Bind<Transform>()
+                .WithId(Enemy.CrystalsParentId)
+                .FromInstance(_crystalsParent);
+
             Container.Bind<ProjectileDestroyer>()
                 .AsSingle()
                 .WithArguments(_projectileLifeTime);
@@ -65,9 +70,9 @@ namespace Assets.Scripts
             container.Bind<Transform>()
                 .FromResolveGetter<Player>(x => x.transform)
                 .AsSingle()
-                .WhenInjectedInto<EnemyMover>();
+                .WhenInjectedInto<EnemiesMover>();
 
-            container.BindInterfacesAndSelfTo<EnemyMover>()
+            container.BindInterfacesAndSelfTo<EnemiesMover>()
                 .AsSingle();
         }
 
@@ -80,6 +85,10 @@ namespace Assets.Scripts
             container.Bind<Transform>()
                 .FromResolveGetter<Player>(x => x.transform)
                 .AsSingle();
+
+            container.Bind<Transform>()
+                .WithId(EnemySpawner.EnemiesParentId)
+                .FromInstance(_enemiesParent);
 
             container.Bind<EnemySpawner>()
                 .AsSingle()
