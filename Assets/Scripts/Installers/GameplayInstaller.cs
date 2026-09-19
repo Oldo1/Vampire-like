@@ -1,4 +1,5 @@
 using Assets.Scripts.Configs;
+using Assets.Scripts.Entities;
 using Assets.Scripts.Gameplay;
 using UnityEngine;
 using Zenject;
@@ -7,6 +8,10 @@ namespace Assets.Scripts
 {
     public class GameplayInstaller : MonoInstaller
     {
+        [Header("Chunk Mover")]
+        [SerializeField, Min(0)] float _raycastMaxDistance;
+        [SerializeField] private LayerMask _chunkLayerMask;
+
         [SerializeField] private EnemySpawnerConfig _enemySpawnerConfig;
         [SerializeField] private DetectionConfig _crystalsDetectionConfig;
         [SerializeField] private DetectionConfig _enemyDetectionConfig;
@@ -60,6 +65,15 @@ namespace Assets.Scripts
             Container.Bind<ProjectileDestroyer>()
                 .AsSingle()
                 .WithArguments(_projectileLifeTime);
+
+            Container.Bind<Chunk>()
+                .FromComponentsInHierarchy()
+                .WhenInjectedInto<ChunkMover>();
+
+            Container.BindInterfacesAndSelfTo<ChunkMover>()
+                .AsSingle()
+                .WithArguments(_raycastMaxDistance, _chunkLayerMask)
+                .NonLazy();
         }
 
         private void InstallEnemyMover(DiContainer container)

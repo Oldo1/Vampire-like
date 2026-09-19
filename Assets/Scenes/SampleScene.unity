@@ -1385,10 +1385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc7b3cd55b9d7246a9fd4f452de6693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _raycastMaxDistance: 1
-  _chunkLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!114 &1678277425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1426,6 +1422,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b579021f15344979f1c8b98b14c9bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _raycastMaxDistance: 0.1
+  _chunkLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _enemySpawnerConfig: {fileID: 11400000, guid: de66ef86174565a46ae9cf57dd8c4679, type: 2}
   _crystalsDetectionConfig: {fileID: 11400000, guid: a59d0eb70848755439e38f88482bb5fc, type: 2}
   _enemyDetectionConfig: {fileID: 11400000, guid: 79a352bfc69cb4e4393e8289185ebdc1, type: 2}
