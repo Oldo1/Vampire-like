@@ -7,17 +7,7 @@ namespace Assets.Scripts
     {
         public override void InstallBindings()
         {
-            Container.Bind<Camera>()
-                .FromComponentInHierarchy()
-                .AsSingle();
-
-            Container.Bind<CameraFollow>()
-                .FromComponentInHierarchy()
-                .AsSingle();
-
-            Container.Bind<Transform>()
-                .FromResolveGetter<Player>(x => x.transform)
-                .WhenInjectedInto<CameraFollow>();
+            
         }
     }
 }
