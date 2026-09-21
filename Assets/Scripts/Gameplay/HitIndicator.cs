@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Assets.Scripts.Configs;
 
 namespace Assets.Scripts.Gameplay
 {
     public class HitIndicator
     {
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        private readonly HitIndicatorConfig _config;
 
-        public void Flash(Renderer renderer, MaterialPropertyBlock block, Color color, float time, MonoBehaviour coroutineStarter)
+        public HitIndicator(HitIndicatorConfig config)
         {
-            var flashRoutine = FlashRoutine(renderer, block, color, time);
+            _config = config;
+        }
+
+        public void Flash(Renderer renderer, MaterialPropertyBlock block, MonoBehaviour coroutineStarter)
+        {
+            var flashRoutine = FlashRoutine(renderer, block);
             coroutineStarter.StartCoroutine(flashRoutine);
         }
 
-        private IEnumerator FlashRoutine(Renderer renderer, MaterialPropertyBlock block, Color color, float time)
+        private IEnumerator FlashRoutine(Renderer renderer, MaterialPropertyBlock block)
         {
-            SetColor(renderer, block, color);
-            yield return new WaitForSeconds(time);
+            SetColor(renderer, block, _config.FlashColor);
+            yield return new WaitForSeconds(_config.FlashDuration);
             renderer.SetPropertyBlock(null);
         }
 
