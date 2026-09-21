@@ -12,13 +12,16 @@ namespace Assets.Scripts
         [SerializeField, Min(0)] float _raycastMaxDistance;
         [SerializeField] private LayerMask _chunkLayerMask;
 
+        [Header("Configs")]
         [SerializeField] private EnemySpawnerConfig _enemySpawnerConfig;
         [SerializeField] private DetectionConfig _crystalsDetectionConfig;
         [SerializeField] private DetectionConfig _enemyDetectionConfig;
+        [SerializeField] private EnemyRotationConfig _enemyRotationConfig;
+        [SerializeField] private ProjectileConfig _projectileConfig;
+
+        [Header("ObjectsParents")]
         [SerializeField] private Transform _enemiesParent;
         [SerializeField] private Transform _crystalsParent;
-        [SerializeField] private float _enemyRotationSpeed;
-        [SerializeField] private float _projectileLifeTime;
 
         public override void InstallBindings()
         {
@@ -64,7 +67,7 @@ namespace Assets.Scripts
 
             Container.Bind<ProjectileDestroyer>()
                 .AsSingle()
-                .WithArguments(_projectileLifeTime);
+                .WithArguments(_projectileConfig.ProjectileLifetime);
 
             Container.Bind<Chunk>()
                 .FromComponentsInHierarchy()
@@ -91,7 +94,7 @@ namespace Assets.Scripts
         private void InstallEnemyMover(DiContainer container)
         {
             container.Bind<float>()
-                .FromInstance(_enemyRotationSpeed);
+                .FromInstance(_enemyRotationConfig.RotationSpeed);
 
             container.Bind<Transform>()
                 .FromResolveGetter<Player>(x => x.transform)
