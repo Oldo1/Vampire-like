@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a1d9c27b5ea664c94b5b90cf6a15cf, type: 3}
   m_Name: ProjectileConfig
   m_EditorClassIdentifier: 
-  <ProjectileLifetime>k__BackingField: -1
+  <ProjectileLifetime>k__BackingField: 5
