@@ -65,7 +65,7 @@ namespace Assets.Scripts
             for(var i = 0; i < _bodyPartsRenderers.Length; i++)
             {
                 var renderer = _bodyPartsRenderers[i];
-                _hitIndicator.Flash(renderer, _block, Color.red, 0.15f, this);
+                _hitIndicator.Flash(renderer, _block, this);
             }
         }
 
