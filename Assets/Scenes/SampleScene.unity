@@ -1417,6 +1417,7 @@ MonoBehaviour:
   _enemyDetectionConfig: {fileID: 11400000, guid: 79a352bfc69cb4e4393e8289185ebdc1, type: 2}
   _enemyRotationConfig: {fileID: 11400000, guid: 2958d1924fd1c8b4d8a4c21dee3012f8, type: 2}
   _projectileConfig: {fileID: 11400000, guid: c69e914ddeff65945ac2646510cc296d, type: 2}
+  _hitIndicatorConfig: {fileID: 11400000, guid: d150058355ab4b65a8576935ebd3c1e7, type: 2}
   _enemiesParent: {fileID: 1318466079}
   _crystalsParent: {fileID: 429320565}
 --- !u!114 &1678277428
