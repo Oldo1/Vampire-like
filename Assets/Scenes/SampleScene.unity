@@ -1308,7 +1308,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1678277423}
   - component: {fileID: 1678277422}
-  - component: {fileID: 1678277424}
   - component: {fileID: 1678277425}
   - component: {fileID: 1678277426}
   - component: {fileID: 1678277427}
@@ -1340,7 +1339,6 @@ MonoBehaviour:
   - {fileID: 1678277427}
   - {fileID: 1678277425}
   - {fileID: 1678277429}
-  - {fileID: 1678277424}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1373,18 +1371,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1678277424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678277421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cc7b3cd55b9d7246a9fd4f452de6693, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1678277425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,10 +1415,10 @@ MonoBehaviour:
   _enemySpawnerConfig: {fileID: 11400000, guid: de66ef86174565a46ae9cf57dd8c4679, type: 2}
   _crystalsDetectionConfig: {fileID: 11400000, guid: a59d0eb70848755439e38f88482bb5fc, type: 2}
   _enemyDetectionConfig: {fileID: 11400000, guid: 79a352bfc69cb4e4393e8289185ebdc1, type: 2}
+  _enemyRotationConfig: {fileID: 0}
+  _projectileConfig: {fileID: 0}
   _enemiesParent: {fileID: 1318466079}
   _crystalsParent: {fileID: 429320565}
-  _enemyRotationSpeed: 720
-  _projectileLifeTime: 5
 --- !u!114 &1678277428
 MonoBehaviour:
   m_ObjectHideFlags: 0
