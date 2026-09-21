@@ -18,6 +18,7 @@ namespace Assets.Scripts
         [SerializeField] private DetectionConfig _enemyDetectionConfig;
         [SerializeField] private EnemyRotationConfig _enemyRotationConfig;
         [SerializeField] private ProjectileConfig _projectileConfig;
+        [SerializeField] private HitIndicatorConfig _hitIndicatorConfig;
 
         [Header("ObjectsParents")]
         [SerializeField] private Transform _enemiesParent;
@@ -59,7 +60,8 @@ namespace Assets.Scripts
                 .WithArguments(_enemyDetectionConfig);
 
             Container.Bind<HitIndicator>()
-                .AsSingle();
+                .AsSingle()
+                .WithArguments(_hitIndicatorConfig);
 
             Container.Bind<Transform>()
                 .WithId(Enemy.CrystalsParentId)
